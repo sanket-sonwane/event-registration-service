@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routes import registration, participants
+from app.routes import registration, participants, stats
 
 app = FastAPI(
     title="Event Registration Service API",
@@ -7,7 +7,7 @@ app = FastAPI(
 A specialized microservice for managing participant registrations for large-scale events.
 This API provides endpoints for registering participants and retrieving participant lists with metadata.
 """,
-    version="1.1.0",
+    version="1.2.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
@@ -15,6 +15,7 @@ This API provides endpoints for registering participants and retrieving particip
 # Include routers
 app.include_router(registration.router)
 app.include_router(participants.router)
+app.include_router(stats.router)
 
 @app.get("/", tags=["Health"])
 async def health_check():

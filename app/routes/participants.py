@@ -25,3 +25,35 @@ async def list_participants():
         total_count=len(participants),
         participants=participants
     )
+@router.get(
+    "/participants/{participant_id}", 
+    response_model=Participant, 
+    status_code=status.HTTP_200_OK,
+    summary="Get participant by ID",
+    description="Retrieves the details of a specific participant using their unique registration ID."
+)
+async def get_participant_by_id(participant_id: str):
+    """
+    Returns a single participant record.
+    """
+    participant = service.get_participant(participant_id)
+    if not participant:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Participant not found")
+    return participant
+
+@router.delete(
+    "/participants/{participant_id}", 
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete participant",
+    description="Removes a participant registration from the system."
+)
+async def delete_participant(participant_id: str):
+    """
+    Deletes a participant record.
+    """
+    success = service.remove_participant(participant_id)
+    if not success:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Participant not found")
+    return None

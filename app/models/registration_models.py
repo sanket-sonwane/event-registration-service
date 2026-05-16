@@ -57,3 +57,17 @@ class ParticipantListResponse(BaseModel):
             }
         }
     }
+
+class StatsResponse(BaseModel):
+    """Schema for event registration statistics."""
+    total_registrations: int
+    average_age: float
+
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "total_registrations": 10,
+                "average_age": 24.5
+            }
+        }
+    }

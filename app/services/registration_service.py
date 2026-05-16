@@ -1,5 +1,5 @@
 from uuid import uuid4
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from app.models.registration_models import ParticipantCreate, RegistrationResponse
 from app.storage.memory_store import MemoryStore
 
@@ -54,3 +54,30 @@ class RegistrationService:
         Retrieves all participants from the store.
         """
         return self.store.list_participants()
+
+    def get_participant(self, participant_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Retrieves a single participant by ID.
+        """
+        return self.store.get_participant_by_id(participant_id)
+
+    def remove_participant(self, participant_id: str) -> bool:
+        """
+        Removes a participant registration.
+        """
+        return self.store.delete_participant(participant_id)
+
+    def get_statistics(self) -> Dict[str, Any]:
+        """
+        Calculates simple registration statistics.
+        """
+        participants = self.store.list_participants()
+        total = len(participants)
+        if total == 0:
+            return {"total_registrations": 0, "average_age": 0.0}
+        
+        avg_age = sum(p["age"] for p in participants) / total
+        return {
+            "total_registrations": total,
+            "average_age": round(avg_age, 2)
+        }
