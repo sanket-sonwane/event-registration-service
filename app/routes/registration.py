@@ -6,7 +6,13 @@ from app.storage.memory_store import memory_store
 router = APIRouter(tags=["Registration"])
 service = RegistrationService(memory_store)
 
-@router.post("/register", response_model=RegistrationResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/register", 
+    response_model=RegistrationResponse, 
+    status_code=status.HTTP_201_CREATED,
+    summary="Register a new participant",
+    description="Validates and registers a new participant for the event."
+)
 async def register_participant(request: ParticipantCreate):
     """
     Endpoint to register a new participant for the event.

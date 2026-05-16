@@ -2,9 +2,14 @@ from fastapi import FastAPI
 from app.routes import registration, participants
 
 app = FastAPI(
-    title="Event Registration Service",
-    description="A microservice for managing event registrations. Designed for high-performance and scalability.",
-    version="1.0.0",
+    title="Event Registration Service API",
+    description="""
+A specialized microservice for managing participant registrations for large-scale events.
+This API provides endpoints for registering participants and retrieving participant lists with metadata.
+""",
+    version="1.1.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
 )
 
 # Include routers
