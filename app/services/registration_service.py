@@ -1,6 +1,6 @@
 from uuid import uuid4
 from typing import List, Dict, Any
-from app.models.registration_models import RegistrationRequest, RegistrationResponse
+from app.models.registration_models import ParticipantCreate, RegistrationResponse
 from app.storage.memory_store import MemoryStore
 
 class RegistrationService:
@@ -10,7 +10,7 @@ class RegistrationService:
     def __init__(self, store: MemoryStore):
         self.store = store
 
-    def register_participant(self, registration_data: RegistrationRequest) -> RegistrationResponse:
+    def register_participant(self, registration_data: ParticipantCreate) -> RegistrationResponse:
         """
         Orchestrates the participant registration process.
         """
@@ -35,7 +35,7 @@ class RegistrationService:
             participant_id=participant_id
         )
 
-    def _validate_registration(self, data: RegistrationRequest) -> None:
+    def _validate_registration(self, data: ParticipantCreate) -> None:
         """
         Internal validation logic for registration requests.
         Ensures all business rules are satisfied before persistence.

@@ -1,26 +1,26 @@
 from pydantic import BaseModel, EmailStr, Field
-from typing import Optional
-from uuid import UUID
+from typing import List, Optional
 
-class RegistrationRequest(BaseModel):
-    """Schema for participant registration request."""
+class ParticipantBase(BaseModel):
+    """Base schema for participant data."""
     name: str = Field(..., min_length=1, max_length=100)
     email: EmailStr
     age: int = Field(...)
 
+class ParticipantCreate(ParticipantBase):
+    """Schema for participant registration request."""
+    pass
+
+class Participant(ParticipantBase):
+    """Schema for participant data in listings including generated fields."""
+    participant_id: str
+
 class RegistrationResponse(BaseModel):
-    """Schema for successful registration response."""
+    """Standardized response for a successful registration."""
     message: str
     participant_id: str
 
-class Participant(BaseModel):
-    """Schema for participant data in listings."""
-    participant_id: str
-    name: str
-    email: str
-    age: int
-
 class ParticipantListResponse(BaseModel):
-    """Schema for participant listing with metadata."""
+    """Standardized response for participant listings with metadata."""
     total_count: int
-    participants: list[Participant]
+    participants: List[Participant]
