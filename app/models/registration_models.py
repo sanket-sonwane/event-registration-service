@@ -19,3 +19,8 @@ class Participant(BaseModel):
     name: str
     email: str
     age: int
+
+class ParticipantListResponse(BaseModel):
+    """Schema for participant listing with metadata."""
+    total_count: int
+    participants: list[Participant]

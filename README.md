@@ -39,14 +39,17 @@ Lists all registered participants.
 
 **Success Response (200 OK):**
 ```json
-[
-  {
-    "participant_id": "550e8400-e29b-41d4-a716-446655440000",
-    "name": "Rahul",
-    "email": "rahul@example.com",
-    "age": 15
-  }
-]
+{
+  "total_count": 1,
+  "participants": [
+    {
+      "participant_id": "550e8400-e29b-41d4-a716-446655440000",
+      "name": "Rahul",
+      "email": "rahul@example.com",
+      "age": 15
+    }
+  ]
+}
 ```
 
 ## Behavioral Guarantees
