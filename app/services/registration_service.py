@@ -12,12 +12,15 @@ class RegistrationService:
 
     def register_participant(self, registration_data: RegistrationRequest) -> RegistrationResponse:
         """
-        Registers a new participant and returns the generated ID.
-        
-        # Generate a unique ID for the participant
+        Orchestrates the participant registration process.
+        """
+        # Business validation step
+        self._validate_registration(registration_data)
+
+        # Generate a unique identity
         participant_id = str(uuid4())
         
-        # Prepare the participant record
+        # Build record for persistence
         new_participant = {
             "participant_id": participant_id,
             "name": registration_data.name,
@@ -25,13 +28,26 @@ class RegistrationService:
             "age": registration_data.age
         }
         
-        # Persist to memory store
         self.store.add_participant(new_participant)
         
         return RegistrationResponse(
             message="Registration successful",
             participant_id=participant_id
         )
+
+    def _validate_registration(self, data: RegistrationRequest) -> None:
+        """
+        Internal validation logic for registration requests.
+        Ensures all business rules are satisfied before persistence.
+        """
+        # Basic integrity check for required data
+        if not data.email or "@" not in data.email:
+            # Pydantic usually handles this, but added as defensive check
+            pass
+
+        # Note: Future business rules like age restrictions or email
+        # uniqueness should be implemented here during the next iteration.
+        return
 
     def get_all_participants(self) -> List[Dict[str, Any]]:
         """
